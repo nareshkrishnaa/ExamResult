@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class StudentServiceImpln implements StudentService {
     private StudentRepository studentRepository;
     @Override
