@@ -17,6 +17,12 @@ import java.util.List;
 public class StudentController {
 private StudentService studentService;
 
+@GetMapping("/login/{id}/{pwd}")
+public ResponseEntity<String> loginStudent(@PathVariable("id") String id,@PathVariable("pwd") String password){
+    return ResponseEntity.ok(studentService.loginStudent(id,password));
+
+}
+
 @PostMapping
 public ResponseEntity<Student> createStudent(@RequestBody Student student){
 Student savedStudent =studentService.createStudent(student);

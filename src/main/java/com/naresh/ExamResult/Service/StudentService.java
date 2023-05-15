@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface StudentService {
 
+    String loginStudent(String rollNo,String password);
     Student createStudent(Student student);
     Student getStudentById(String rollNo);
     List<Student>getAllStudents();

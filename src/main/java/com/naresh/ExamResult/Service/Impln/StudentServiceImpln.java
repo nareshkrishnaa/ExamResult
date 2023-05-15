@@ -13,6 +13,30 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StudentServiceImpln implements StudentService {
     private StudentRepository studentRepository;
+
+    @Override
+    public String loginStudent(String rollNo, String password) {
+        if(studentRepository.findById(rollNo).isPresent()){
+            System.out.println("1");
+            Student student =studentRepository.findById(rollNo).get();
+            String s1=student.getPassword();
+            String s2=password;
+            if (s1.equals(s2))
+            {
+                return "Login successful";
+            }
+            else {
+                System.out.println("2");
+                return "Login failure";
+            }
+        }
+        else{
+            return "Login failure";
+        }
+
+
+    }
+
     @Override
     public Student createStudent(Student student) {
         return studentRepository.save(student);
