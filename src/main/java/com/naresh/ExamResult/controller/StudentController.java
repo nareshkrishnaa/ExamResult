@@ -1,11 +1,10 @@
-package com.naresh.ExamResult.Controller;
+package com.naresh.ExamResult.controller;
 
-import com.naresh.ExamResult.Entity.Student;
-import com.naresh.ExamResult.Service.StudentService;
+import com.naresh.ExamResult.entity.Student;
+import com.naresh.ExamResult.entity.StudentResult;
+import com.naresh.ExamResult.service.StudentService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +16,29 @@ import java.util.List;
 public class StudentController {
 private StudentService studentService;
 
+@PostMapping("/create")
+public ResponseEntity<String> createStudent(@RequestBody Student student){
+    System.out.println("1");
+    Student createdStudent=studentService.createStudent(student);
+    String s1="Student created for "+createdStudent.getName()+
+            "! rollNo = "+createdStudent.getRollNo()+" and Password = "+createdStudent.getPassword();
+    System.out.println(s1);
+    return ResponseEntity.ok(s1);
+}
+
+    @GetMapping("/get-result/{id}/{pwd}")
+    public ResponseEntity<StudentResult> getStudentResult(@PathVariable("id") String id, @PathVariable("pwd") String password){
+        return ResponseEntity.ok(studentService.getResult(id,password));
+
+    }
+
 @GetMapping("/login/{id}/{pwd}")
 public ResponseEntity<String> loginStudent(@PathVariable("id") String id,@PathVariable("pwd") String password){
     return ResponseEntity.ok(studentService.loginStudent(id,password));
 
 }
 
-@PostMapping
-public ResponseEntity<Student> createStudent(@RequestBody Student student){
-Student savedStudent =studentService.createStudent(student);
-return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
-}
+
 
 @GetMapping("{rollNo}")
     public ResponseEntity<Student> getStudent(@PathVariable("rollNo") String rollNumber){

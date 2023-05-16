@@ -1,4 +1,4 @@
-package com.naresh.ExamResult.Entity;
+package com.naresh.ExamResult.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

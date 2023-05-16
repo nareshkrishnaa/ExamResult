@@ -1,14 +1,19 @@
-package com.naresh.ExamResult.Service.Impln;
+package com.naresh.ExamResult.service.Impln;
 
-import com.naresh.ExamResult.Entity.Student;
-import com.naresh.ExamResult.Repository.StudentRepository;
-import com.naresh.ExamResult.Service.StudentService;
+import com.naresh.ExamResult.entity.Student;
+import com.naresh.ExamResult.entity.StudentResult;
+import com.naresh.ExamResult.exceptions.PasswordNotMatchingException;
+import com.naresh.ExamResult.exceptions.ResourceNotFoundException;
+import com.naresh.ExamResult.repository.StudentRepository;
+import com.naresh.ExamResult.service.StudentService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.naresh.ExamResult.ExamResultApplication.modelMapper;
+
 @Service
 @AllArgsConstructor
 public class StudentServiceImpln implements StudentService {
@@ -20,8 +25,7 @@ public class StudentServiceImpln implements StudentService {
             System.out.println("1");
             Student student =studentRepository.findById(rollNo).get();
             String s1=student.getPassword();
-            String s2=password;
-            if (s1.equals(s2))
+            if (s1.equals(password))
             {
                 return "Login successful";
             }
@@ -49,6 +53,24 @@ public class StudentServiceImpln implements StudentService {
     }
 
     @Override
+    public StudentResult getResult(String rollNo, String password) {
+
+        if(studentRepository.findById(rollNo).isPresent()){
+        Student student = studentRepository.findById(rollNo).get();
+        if(student.getPassword().equals(password)) {
+            return modelMapper().map(student, StudentResult.class);
+        }
+        else {
+            throw new PasswordNotMatchingException("Password wrong");
+        }
+        }
+        else {
+                throw new ResourceNotFoundException("No such item exists");
+        }
+
+    }
+
+    @Override
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
@@ -61,8 +83,7 @@ public class StudentServiceImpln implements StudentService {
         existingStudent.setSubject1(student.getSubject1());
         existingStudent.setSubject2(student.getSubject2());
         existingStudent.setSubject3(student.getSubject3());
-        Student updatedStudent =studentRepository.save(existingStudent);
-        return updatedStudent;
+        return studentRepository.save(existingStudent);
     }
 
     @Override

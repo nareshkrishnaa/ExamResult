@@ -1,7 +1,7 @@
-package com.naresh.ExamResult.Controller;
+package com.naresh.ExamResult.controller;
 
-import com.naresh.ExamResult.Entity.Teacher;
-import com.naresh.ExamResult.Service.TeacherService;
+import com.naresh.ExamResult.entity.Teacher;
+import com.naresh.ExamResult.service.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
