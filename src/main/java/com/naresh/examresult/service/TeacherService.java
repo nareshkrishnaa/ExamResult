@@ -1,6 +1,6 @@
-package com.naresh.ExamResult.service;
+package com.naresh.examresult.service;
 
-import com.naresh.ExamResult.entity.Teacher;
+import com.naresh.examresult.entity.Teacher;
 
 public interface TeacherService {
     String teacherLogin(String id,String password);

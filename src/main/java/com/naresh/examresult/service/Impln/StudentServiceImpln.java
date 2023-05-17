@@ -1,18 +1,18 @@
-package com.naresh.ExamResult.service.Impln;
+package com.naresh.examresult.service.Impln;
 
-import com.naresh.ExamResult.entity.Student;
-import com.naresh.ExamResult.entity.StudentResult;
-import com.naresh.ExamResult.exceptions.PasswordNotMatchingException;
-import com.naresh.ExamResult.exceptions.ResourceNotFoundException;
-import com.naresh.ExamResult.repository.StudentRepository;
-import com.naresh.ExamResult.service.StudentService;
+import com.naresh.examresult.entity.Student;
+import com.naresh.examresult.entity.StudentResult;
+import com.naresh.examresult.exceptions.PasswordNotMatchingException;
+import com.naresh.examresult.exceptions.ResourceNotFoundException;
+import com.naresh.examresult.repository.StudentRepository;
+import com.naresh.examresult.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.naresh.ExamResult.ExamResultApplication.modelMapper;
+import static com.naresh.examresult.ExamResultApplication.modelMapper;
 
 @Service
 @AllArgsConstructor
@@ -21,10 +21,11 @@ public class StudentServiceImpln implements StudentService {
 
     @Override
     public String loginStudent(String rollNo, String password) {
-        if(studentRepository.findById(rollNo).isPresent()){
+        var  student =studentRepository.findById(rollNo);
+        if(student.isPresent()){
             System.out.println("1");
-            Student student =studentRepository.findById(rollNo).get();
-            String s1=student.getPassword();
+
+            String s1=student.get().getPassword();
             if (s1.equals(password))
             {
                 return "Login successful";

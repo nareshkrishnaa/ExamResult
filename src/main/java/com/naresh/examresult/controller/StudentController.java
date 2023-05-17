@@ -1,8 +1,8 @@
-package com.naresh.ExamResult.controller;
+package com.naresh.examresult.controller;
 
-import com.naresh.ExamResult.entity.Student;
-import com.naresh.ExamResult.entity.StudentResult;
-import com.naresh.ExamResult.service.StudentService;
+import com.naresh.examresult.entity.Student;
+import com.naresh.examresult.entity.StudentResult;
+import com.naresh.examresult.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

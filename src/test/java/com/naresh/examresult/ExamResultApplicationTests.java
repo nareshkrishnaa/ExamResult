@@ -1,4 +1,4 @@
-package com.naresh.ExamResult;
+package com.naresh.examresult;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

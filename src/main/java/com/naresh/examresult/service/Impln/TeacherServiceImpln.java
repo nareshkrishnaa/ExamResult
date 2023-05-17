@@ -1,8 +1,8 @@
-package com.naresh.ExamResult.service.Impln;
+package com.naresh.examresult.service.Impln;
 
-import com.naresh.ExamResult.entity.Teacher;
-import com.naresh.ExamResult.repository.TeacherRepository;
-import com.naresh.ExamResult.service.TeacherService;
+import com.naresh.examresult.entity.Teacher;
+import com.naresh.examresult.repository.TeacherRepository;
+import com.naresh.examresult.service.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

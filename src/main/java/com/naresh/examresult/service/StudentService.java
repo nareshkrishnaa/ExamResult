@@ -1,7 +1,7 @@
-package com.naresh.ExamResult.service;
+package com.naresh.examresult.service;
 
-import com.naresh.ExamResult.entity.Student;
-import com.naresh.ExamResult.entity.StudentResult;
+import com.naresh.examresult.entity.Student;
+import com.naresh.examresult.entity.StudentResult;
 
 import java.util.List;
 

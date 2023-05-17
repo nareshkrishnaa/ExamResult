@@ -1,4 +1,4 @@
-package com.naresh.ExamResult;
+package com.naresh.examresult;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
