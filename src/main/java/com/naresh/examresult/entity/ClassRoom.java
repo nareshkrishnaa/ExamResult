@@ -1,5 +1,5 @@
 package com.naresh.examresult.entity;
 
-public class ClassRoom {
+public class  ClassRoom {
 
 }
