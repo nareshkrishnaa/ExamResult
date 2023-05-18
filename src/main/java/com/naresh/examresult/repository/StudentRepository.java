@@ -1,7 +1,8 @@
-package com.naresh.ExamResult.Repository;
+package com.naresh.examresult.repository;
 
-import com.naresh.ExamResult.Entity.Student;
+import com.naresh.examresult.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudentRepository extends JpaRepository<Student,String> {
+
 }
