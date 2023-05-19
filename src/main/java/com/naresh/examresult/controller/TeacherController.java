@@ -14,12 +14,12 @@ public class TeacherController {
 private TeacherService teacherService;
 
 
-@PostMapping("/create")
+@PostMapping("/create") //RBAuth done
     public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher){
     return ResponseEntity.ok(teacherService.createTeacher(teacher));
 }
 
-@GetMapping("/login/{id}/{pwd}")
+@GetMapping("/login/{id}/{pwd}")//RBAuth done
     public ResponseEntity<String> teacherLogin(@PathVariable("id") String id,@PathVariable("pwd") String password){
     return ResponseEntity.ok(teacherService.teacherLogin(id,password));
 }
