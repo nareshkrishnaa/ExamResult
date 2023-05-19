@@ -16,7 +16,7 @@ import java.util.List;
 public class StudentController {
 private StudentService studentService;
 
-@PostMapping("/create")
+@PostMapping("/create")   //RBAuth done
 public ResponseEntity<String> createStudent(@RequestBody Student student){
     System.out.println("1");
     Student createdStudent=studentService.createStudent(student);
@@ -26,13 +26,13 @@ public ResponseEntity<String> createStudent(@RequestBody Student student){
     return ResponseEntity.ok(s1);
 }
 
-    @GetMapping("/get-result/{id}/{pwd}")
+    @GetMapping("/get-result/{id}/{pwd}")//RBAuth done
     public ResponseEntity<StudentResult> getStudentResult(@PathVariable("id") String id, @PathVariable("pwd") String password){
         return ResponseEntity.ok(studentService.getResult(id,password));
 
     }
 
-@GetMapping("/login/{id}/{pwd}")
+@GetMapping("/login/{id}/{pwd}")//RBAuth done
 public ResponseEntity<String> loginStudent(@PathVariable("id") String id,@PathVariable("pwd") String password){
     return ResponseEntity.ok(studentService.loginStudent(id,password));
 
@@ -40,7 +40,7 @@ public ResponseEntity<String> loginStudent(@PathVariable("id") String id,@PathVa
 
 
 
-@GetMapping("{rollNo}")
+@GetMapping("/get-student/{rollNo}")//RBAUth done
     public ResponseEntity<Student> getStudent(@PathVariable("rollNo") String rollNumber){
 
     Student student = studentService.getStudentById(rollNumber);
@@ -48,20 +48,20 @@ public ResponseEntity<String> loginStudent(@PathVariable("id") String id,@PathVa
 
     }
 
-   @GetMapping("all")
+   @GetMapping("all") // RBAuth done
    public ResponseEntity<List<Student>> getAllStudents(){
        List<Student> list = studentService.getAllStudents();
        return new ResponseEntity<>(list,HttpStatus.OK);
    }
 
 
-   @PutMapping({"rollNo"})
+   @PutMapping("/update/{rollNo}")//RBAuth done
     public ResponseEntity<Student> updateStudent(@PathVariable("rollNo") String rollNo,@RequestBody Student student){
     Student updatedStudent = studentService.updateStudent(student);
     return new ResponseEntity<>(updatedStudent,HttpStatus.OK);
    }
 
-   @DeleteMapping("{rollNo}")
+   @DeleteMapping("/delete/{rollNo}")//RBAuth done
     public ResponseEntity<String> deleteStudent(@PathVariable("rollNo") String rollNo){
         studentService.deleteStudent(rollNo);
         return new ResponseEntity<>("User deleted",HttpStatus.OK);
