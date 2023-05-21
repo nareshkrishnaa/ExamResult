@@ -1,3 +1,4 @@
+/* (C)2023 */
 package com.naresh.examresult.entity;
 
 import lombok.*;
@@ -13,6 +14,4 @@ public class StudentResult {
     private int subject1;
     private int subject2;
     private int subject3;
-
-
 }

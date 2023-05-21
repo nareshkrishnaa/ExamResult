@@ -1,3 +1,4 @@
+/* (C)2023 */
 package com.naresh.examresult.exceptions;
 
 import org.springframework.http.HttpStatus;
@@ -9,5 +10,3 @@ public class PasswordNotMatchingException extends RuntimeException {
         super(message);
     }
 }
-
-

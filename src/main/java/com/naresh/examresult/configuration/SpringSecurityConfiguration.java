@@ -1,3 +1,4 @@
+/* (C)2023 */
 package com.naresh.examresult.configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -23,51 +24,75 @@ public class SpringSecurityConfiguration {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeHttpRequests((authorize) -> {
-            authorize.requestMatchers(HttpMethod.GET,"/student/all").hasAnyRole("ADMIN","TEACHER");
+        http.csrf()
+                .disable()
+                .authorizeHttpRequests(
+                        (authorize) -> {
+                            authorize
+                                    .requestMatchers(HttpMethod.GET, "/student/all")
+                                    .hasAnyRole("ADMIN", "TEACHER");
 
-            authorize.requestMatchers(HttpMethod.POST,"/student/create").hasAnyRole("ADMIN","TEACHER");
+                            authorize
+                                    .requestMatchers(HttpMethod.POST, "/student/create")
+                                    .hasAnyRole("ADMIN", "TEACHER");
 
-            authorize.requestMatchers(HttpMethod.POST,"/teacher/create").hasAnyRole("ADMIN");
+                            authorize
+                                    .requestMatchers(HttpMethod.POST, "/teacher/create")
+                                    .hasAnyRole("ADMIN");
 
-            authorize.requestMatchers(HttpMethod.GET,"/teacher/login/**").hasAnyRole("TEACHER");
+                            authorize
+                                    .requestMatchers(HttpMethod.GET, "/teacher/login/**")
+                                    .hasAnyRole("TEACHER");
 
-            authorize.requestMatchers(HttpMethod.GET,"/student/get-result/**").hasRole("STUDENT");
+                            authorize
+                                    .requestMatchers(HttpMethod.GET, "/student/get-result/**")
+                                    .hasRole("STUDENT");
 
-            authorize.requestMatchers(HttpMethod.GET,"/student/login/**").hasRole("STUDENT");
+                            authorize
+                                    .requestMatchers(HttpMethod.GET, "/student/login/**")
+                                    .hasRole("STUDENT");
 
-            authorize.requestMatchers(HttpMethod.GET,"/student/get-student/**").hasAnyRole("ADMIN","TEACHER");
+                            authorize
+                                    .requestMatchers(HttpMethod.GET, "/student/get-student/**")
+                                    .hasAnyRole("ADMIN", "TEACHER");
 
-            authorize.requestMatchers(HttpMethod.PUT,"/student/update/**").hasAnyRole("ADMIN","TEACHER");
+                            authorize
+                                    .requestMatchers(HttpMethod.PUT, "/student/update/**")
+                                    .hasAnyRole("ADMIN", "TEACHER");
 
-            authorize.requestMatchers(HttpMethod.DELETE,"/student/**").hasAnyRole("ADMIN","TEACHER");
+                            authorize
+                                    .requestMatchers(HttpMethod.DELETE, "/student/**")
+                                    .hasAnyRole("ADMIN", "TEACHER");
 
-            authorize.anyRequest().authenticated();
-        }).httpBasic(Customizer.withDefaults());
+                            authorize.anyRequest().authenticated();
+                        })
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
-
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails student = User.builder().
-                username("student").
-                password(passwordEncoder().encode("pwd")).
-                roles("STUDENT").
-                build();
+        UserDetails student =
+                User.builder()
+                        .username("student")
+                        .password(passwordEncoder().encode("pwd"))
+                        .roles("STUDENT")
+                        .build();
 
-        UserDetails teacher = User.builder().
-                username("teacher").
-                password(passwordEncoder().encode("pwd")).
-                roles("TEACHER").
-                build();
+        UserDetails teacher =
+                User.builder()
+                        .username("teacher")
+                        .password(passwordEncoder().encode("pwd"))
+                        .roles("TEACHER")
+                        .build();
 
-        UserDetails admin = User.builder().
-                username("admin").
-                password(passwordEncoder().encode("pwd")).
-                roles("ADMIN").
-                build();
+        UserDetails admin =
+                User.builder()
+                        .username("admin")
+                        .password(passwordEncoder().encode("pwd"))
+                        .roles("ADMIN")
+                        .build();
 
-        return new InMemoryUserDetailsManager(student, admin,teacher);
+        return new InMemoryUserDetailsManager(student, admin, teacher);
     }
 }
