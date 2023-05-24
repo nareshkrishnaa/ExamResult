@@ -28,42 +28,6 @@ public class SpringSecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests(
                         (authorize) -> {
-                            authorize
-                                    .requestMatchers(HttpMethod.GET, "/student/all")
-                                    .hasAnyRole("ADMIN", "TEACHER");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.POST, "/student/create")
-                                    .hasAnyRole("ADMIN", "TEACHER");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.POST, "/teacher/create")
-                                    .hasAnyRole("ADMIN");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.GET, "/teacher/login/**")
-                                    .hasAnyRole("TEACHER");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.GET, "/student/get-result/**")
-                                    .hasRole("STUDENT");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.GET, "/student/login/**")
-                                    .hasRole("STUDENT");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.GET, "/student/get-student/**")
-                                    .hasAnyRole("ADMIN", "TEACHER");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.PUT, "/student/update/**")
-                                    .hasAnyRole("ADMIN", "TEACHER");
-
-                            authorize
-                                    .requestMatchers(HttpMethod.DELETE, "/student/**")
-                                    .hasAnyRole("ADMIN", "TEACHER");
-
                             authorize.anyRequest().authenticated();
                         })
                 .httpBasic(Customizer.withDefaults());
