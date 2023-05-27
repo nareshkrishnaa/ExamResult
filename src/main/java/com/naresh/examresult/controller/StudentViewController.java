@@ -5,6 +5,7 @@ import com.naresh.examresult.entity.Student;
 
 import com.naresh.examresult.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,4 +36,22 @@ public class StudentViewController {
         model.addAttribute("students",students);
         return "result-page";
     }
+
+    @GetMapping("/view/new")
+    public String createStudent(Model model) {
+
+//        Student createdStudent = studentService.createStudent(student);
+//        String s1 =
+//                "Student created for "
+//                        + createdStudent.getName()
+//                        + "! rollNo = "
+//                        + createdStudent.getRollNo()
+//                        + " and Password = "
+//                        + createdStudent.getPassword();
+//        System.out.println(s1);
+        Student student = new Student();
+        model.addAttribute("student",student);
+        return "create-student";
+    }
+
 }
