@@ -5,4 +5,4 @@ import com.naresh.examresult.entity.Teacher;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TeacherRepository extends JpaRepository<Teacher, String> {}
+public interface TeacherRepository extends JpaRepository<Teacher, Integer> {}

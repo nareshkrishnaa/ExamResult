@@ -1,89 +1,98 @@
 /* (C)2023 */
 package com.naresh.examresult.service.Impln;
 
-import static com.naresh.examresult.ExamResultApplication.modelMapper;
-
 import com.naresh.examresult.entity.Student;
-import com.naresh.examresult.entity.StudentResult;
-import com.naresh.examresult.exceptions.PasswordNotMatchingException;
-import com.naresh.examresult.exceptions.ResourceNotFoundException;
+import com.naresh.examresult.entity.StudentDto;
 import com.naresh.examresult.repository.StudentRepository;
 import com.naresh.examresult.service.StudentService;
 
-import lombok.AllArgsConstructor;
-
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class StudentServiceImpln implements StudentService {
-    private StudentRepository studentRepository;
+    @Autowired private StudentRepository studentRepository;
 
     @Override
-    public String loginStudent(String rollNo, String password) {
-        var student = studentRepository.findById(rollNo);
+    public StudentDto loginStudent(Integer rollNo, String password) {
+        Optional<Student> student = studentRepository.findById(rollNo);
+
+        if (student.isPresent() && student.get().getPassword().equals(password))
+            return new ModelMapper().map(student, StudentDto.class);
+        else return new StudentDto();
+    }
+
+    @Override
+    public StudentDto createStudent(Student student) {
+
+        Student savedStudent = studentRepository.save(student);
+
+        return new ModelMapper().map(savedStudent, StudentDto.class);
+    }
+
+    @Override
+    public StudentDto getStudentById(Integer rollNo) {
+        Optional<Student> student = studentRepository.findById(rollNo);
         if (student.isPresent()) {
-            System.out.println("1");
-
-            String s1 = student.get().getPassword();
-            if (s1.equals(password)) {
-                return "Login successful";
-            } else {
-                System.out.println("2");
-                return "Login failure";
-            }
+            return new ModelMapper().map(student, StudentDto.class);
         } else {
-            return "Login failure";
+            return new StudentDto();
         }
     }
 
     @Override
-    public Student createStudent(Student student) {
-        return studentRepository.save(student);
-    }
+    public StudentDto getResult(Integer rollNo, String password) {
+        Optional<Student> student = studentRepository.findById(rollNo);
 
-    @Override
-    public Student getStudentById(String rollNo) {
-        Optional<Student> optionalStudent = studentRepository.findById(rollNo);
-        return optionalStudent.get();
-    }
-
-    @Override
-    public StudentResult getResult(String rollNo, String password) {
-
-        if (studentRepository.findById(rollNo).isPresent()) {
-            Student student = studentRepository.findById(rollNo).get();
-            if (student.getPassword().equals(password)) {
-                return modelMapper().map(student, StudentResult.class);
-            } else {
-                throw new PasswordNotMatchingException("Password wrong");
-            }
-        } else {
-            throw new ResourceNotFoundException("No such item exists");
+        if (student.isPresent() && student.get().getPassword().equals(password)) {
+            return new ModelMapper().map(student, StudentDto.class);
         }
+        return new StudentDto();
     }
 
     @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentDto> getAllStudents() {
+        Optional<List<Student>> studentList = Optional.of(studentRepository.findAll());
+        if (studentList.isPresent()) {
+            List<StudentDto> studentDtoList = new ArrayList<>();
+            for (Student student:
+                 studentList.get()) {
+                studentDtoList.add(new ModelMapper().map(student,StudentDto.class));
+            }
+            return studentDtoList;
+        }
+
+        StudentDto studentDto= new StudentDto();
+        studentDto.setName("dummmy");
+        List<StudentDto> studentDtos=new ArrayList<>();
+        studentDtos.add(studentDto);
+        return studentDtos;
     }
 
     @Override
-    public Student updateStudent(Student student) {
-        Student existingStudent = studentRepository.findById(student.getRollNo()).get();
-        existingStudent.setName(student.getName());
-        existingStudent.setPassword(student.getPassword());
-        existingStudent.setMath(student.getMath());
-        existingStudent.setSubject2(student.getSubject2());
-        existingStudent.setSubject3(student.getSubject3());
-        return studentRepository.save(existingStudent);
+    public StudentDto updateStudent(Student student) {
+        Optional<Student> student1= studentRepository.findById(student.getRollNo());
+        if(student1.isPresent()){
+            Student updatedStudent=new Student();
+            new ModelMapper().map(student,updatedStudent);
+            studentRepository.save(updatedStudent);
+            return new ModelMapper().map(updatedStudent,StudentDto.class);
+        }
+
+        return new StudentDto();
     }
 
     @Override
-    public void deleteStudent(String rollNo) {
-        studentRepository.deleteById(rollNo);
+    public void deleteStudent(Integer rollNo) {
+
+        Optional<Student> student= studentRepository.findById(rollNo);
+        if(student.isPresent())
+        studentRepository.delete(student.get());
     }
 }

@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class StudentResult {
-    private String rollNo;
+public class StudentDto {
+    private Integer rollNo;
     private String name;
-    private int subject1;
-    private int subject2;
-    private int subject3;
+    private int math;
+    private int science;
+    private int english;
 }

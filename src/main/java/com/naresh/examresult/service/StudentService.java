@@ -2,23 +2,23 @@
 package com.naresh.examresult.service;
 
 import com.naresh.examresult.entity.Student;
-import com.naresh.examresult.entity.StudentResult;
+import com.naresh.examresult.entity.StudentDto;
 
 import java.util.List;
 
 public interface StudentService {
 
-    String loginStudent(String rollNo, String password);
+    StudentDto loginStudent(Integer rollNo, String password);
 
-    Student createStudent(Student student);
+    StudentDto createStudent(Student student);
 
-    Student getStudentById(String rollNo);
+    StudentDto getStudentById(Integer rollNo);
 
-    StudentResult getResult(String rollNo, String password);
+    StudentDto getResult(Integer rollNo, String password);
 
-    List<Student> getAllStudents();
+    List<StudentDto> getAllStudents();
 
-    Student updateStudent(Student student);
+    StudentDto updateStudent(Student student);
 
-    void deleteStudent(String rollNo);
+    void deleteStudent(Integer rollNo);
 }
