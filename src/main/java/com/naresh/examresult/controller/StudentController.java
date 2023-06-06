@@ -1,10 +1,13 @@
 /* (C)2023 */
 package com.naresh.examresult.controller;
 
+import com.naresh.examresult.entity.Student;
+import com.naresh.examresult.entity.StudentDto;
 import com.naresh.examresult.service.StudentService;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,32 +16,25 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
     private StudentService studentService;
 
-    //    @PostMapping("/create") // RBAuth done
-    //    public ResponseEntity<String> createStudent(@RequestBody Student student) {
-    //        System.out.println("1");
-    //        Student createdStudent = studentService.createStudent(student);
-    //        String s1 =
-    //                "Student created for "
-    //                        + createdStudent.getName()
-    //                        + "! rollNo1 = "
-    //                        + createdStudent.getRollNo()
-    //                        + " and Password = "
-    //                        + createdStudent.getPassword();
-    //        System.out.println(s1);
-    //        return ResponseEntity.ok(s1);
-    //    }
-    //
-    //    @GetMapping("/get-result/{id}/{pwd}") // RBAuth done
-    //    public ResponseEntity<StudentResult> getStudentResult(
-    //            @PathVariable("id") String id, @PathVariable("pwd") String password) {
-    //        return ResponseEntity.ok(studentService.getResult(id, password));
-    //    }
-    //
-    //    @GetMapping("/login/{id}/{pwd}") // RBAuth done
-    //    public ResponseEntity<String> loginStudent(
-    //            @PathVariable("id") String id, @PathVariable("pwd") String password) {
-    //        return ResponseEntity.ok(studentService.loginStudent(id, password));
-    //    }
+    @PostMapping("/create") // RBAuth done
+    public ResponseEntity<StudentDto> createStudent(@RequestBody Student student) {
+
+        StudentDto createdStudentDto = studentService.createStudent(student);
+        return ResponseEntity.ok(createdStudentDto);
+    }
+
+    @GetMapping("/get-result/{id}/{pwd}") // RBAuth done
+    public ResponseEntity<StudentDto> getStudentResult(
+            @PathVariable("id") Integer id, @PathVariable("pwd") String password) {
+        StudentDto studentDto = studentService.getResult(id, password);
+        return ResponseEntity.ok(studentDto);
+    }
+
+    @GetMapping("/login/{id}/{pwd}") // RBAuth done
+    public ResponseEntity<StudentDto> loginStudent(
+            @PathVariable("id") Integer id, @PathVariable("pwd") String password) {
+        return ResponseEntity.ok(studentService.loginStudent(id, password));
+    }
     //
     //    @GetMapping("/get-student/{rollNo1}") // RBAUth done
     //    public ResponseEntity<Student> getStudent(@PathVariable("rollNo1") String rollNumber) {

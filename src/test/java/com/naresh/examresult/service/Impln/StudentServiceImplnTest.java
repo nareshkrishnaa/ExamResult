@@ -111,27 +111,27 @@ class StudentServiceImplnTest {
     }
 
     @Test
-    void updateAnExistingStudent(){
+    void updateAnExistingStudent() {
         System.out.println("-----------------------------------------");
-        Student student= new Student(2,"Bommi",25,30,35,"pwd");
-        StudentDto studentDto= studentServiceImpln.updateStudent(student);
+        Student student = new Student(2, "Bommi", 25, 30, 35, "pwd");
+        StudentDto studentDto = studentServiceImpln.updateStudent(student);
         System.out.println(studentDto);
         System.out.println("-----------------------------------------");
     }
 
     @Test
-    void updateANonExistingStudent(){
+    void updateANonExistingStudent() {
         System.out.println("-----------------------------------------");
-        Student student= new Student(2000,"Bommi",25,30,35,"pwd");
-        StudentDto studentDto= studentServiceImpln.updateStudent(student);
+        Student student = new Student(2000, "Bommi", 25, 30, 35, "pwd");
+        StudentDto studentDto = studentServiceImpln.updateStudent(student);
         System.out.println(studentDto);
         System.out.println("-----------------------------------------");
     }
 
     @Test
-    void deleteStudent(){
+    void deleteStudent() {
         System.out.println("------------------------------------------------");
-        Integer rollNo=3;
+        Integer rollNo = 3;
         studentServiceImpln.deleteStudent(rollNo);
         System.out.println("------------------------------------------------");
     }

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,28 +60,27 @@ public class StudentServiceImpln implements StudentService {
         Optional<List<Student>> studentList = Optional.of(studentRepository.findAll());
         if (studentList.isPresent()) {
             List<StudentDto> studentDtoList = new ArrayList<>();
-            for (Student student:
-                 studentList.get()) {
-                studentDtoList.add(new ModelMapper().map(student,StudentDto.class));
+            for (Student student : studentList.get()) {
+                studentDtoList.add(new ModelMapper().map(student, StudentDto.class));
             }
             return studentDtoList;
         }
 
-        StudentDto studentDto= new StudentDto();
+        StudentDto studentDto = new StudentDto();
         studentDto.setName("dummmy");
-        List<StudentDto> studentDtos=new ArrayList<>();
+        List<StudentDto> studentDtos = new ArrayList<>();
         studentDtos.add(studentDto);
         return studentDtos;
     }
 
     @Override
     public StudentDto updateStudent(Student student) {
-        Optional<Student> student1= studentRepository.findById(student.getRollNo());
-        if(student1.isPresent()){
-            Student updatedStudent=new Student();
-            new ModelMapper().map(student,updatedStudent);
+        Optional<Student> student1 = studentRepository.findById(student.getRollNo());
+        if (student1.isPresent()) {
+            Student updatedStudent = new Student();
+            new ModelMapper().map(student, updatedStudent);
             studentRepository.save(updatedStudent);
-            return new ModelMapper().map(updatedStudent,StudentDto.class);
+            return new ModelMapper().map(updatedStudent, StudentDto.class);
         }
 
         return new StudentDto();
@@ -91,8 +89,7 @@ public class StudentServiceImpln implements StudentService {
     @Override
     public void deleteStudent(Integer rollNo) {
 
-        Optional<Student> student= studentRepository.findById(rollNo);
-        if(student.isPresent())
-        studentRepository.delete(student.get());
+        Optional<Student> student = studentRepository.findById(rollNo);
+        if (student.isPresent()) studentRepository.delete(student.get());
     }
 }
