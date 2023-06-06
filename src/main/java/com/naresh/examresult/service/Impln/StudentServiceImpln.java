@@ -17,13 +17,14 @@ import java.util.Optional;
 @Service
 public class StudentServiceImpln implements StudentService {
     @Autowired private StudentRepository studentRepository;
+    @Autowired private ModelMapper modelMapper;
 
     @Override
     public StudentDto loginStudent(Integer rollNo, String password) {
         Optional<Student> student = studentRepository.findById(rollNo);
 
         if (student.isPresent() && student.get().getPassword().equals(password))
-            return new ModelMapper().map(student, StudentDto.class);
+            return modelMapper.map(student, StudentDto.class);
         else return new StudentDto();
     }
 
@@ -32,14 +33,14 @@ public class StudentServiceImpln implements StudentService {
 
         Student savedStudent = studentRepository.save(student);
 
-        return new ModelMapper().map(savedStudent, StudentDto.class);
+        return modelMapper.map(savedStudent, StudentDto.class);
     }
 
     @Override
     public StudentDto getStudentById(Integer rollNo) {
         Optional<Student> student = studentRepository.findById(rollNo);
         if (student.isPresent()) {
-            return new ModelMapper().map(student, StudentDto.class);
+            return modelMapper.map(student, StudentDto.class);
         } else {
             return new StudentDto();
         }
@@ -50,7 +51,7 @@ public class StudentServiceImpln implements StudentService {
         Optional<Student> student = studentRepository.findById(rollNo);
 
         if (student.isPresent() && student.get().getPassword().equals(password)) {
-            return new ModelMapper().map(student, StudentDto.class);
+            return modelMapper.map(student, StudentDto.class);
         }
         return new StudentDto();
     }
@@ -61,7 +62,7 @@ public class StudentServiceImpln implements StudentService {
         if (studentList.isPresent()) {
             List<StudentDto> studentDtoList = new ArrayList<>();
             for (Student student : studentList.get()) {
-                studentDtoList.add(new ModelMapper().map(student, StudentDto.class));
+                studentDtoList.add(modelMapper.map(student, StudentDto.class));
             }
             return studentDtoList;
         }
@@ -78,9 +79,9 @@ public class StudentServiceImpln implements StudentService {
         Optional<Student> student1 = studentRepository.findById(student.getRollNo());
         if (student1.isPresent()) {
             Student updatedStudent = new Student();
-            new ModelMapper().map(student, updatedStudent);
+            modelMapper.map(student, updatedStudent);
             studentRepository.save(updatedStudent);
-            return new ModelMapper().map(updatedStudent, StudentDto.class);
+            return modelMapper.map(updatedStudent, StudentDto.class);
         }
 
         return new StudentDto();
