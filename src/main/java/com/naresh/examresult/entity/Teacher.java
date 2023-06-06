@@ -1,8 +1,8 @@
+/* (C)2023 */
 package com.naresh.examresult.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import lombok.*;
 
 @Entity
@@ -14,8 +14,9 @@ import lombok.*;
 @Table(name = "Teacher_Table")
 public class Teacher {
     @Id
-    String staffId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer staffId;
+
     String name;
     String password;
-
 }
