@@ -3,6 +3,8 @@ package com.naresh.examresult.service.Impln;
 
 import com.naresh.examresult.entity.Student;
 import com.naresh.examresult.entity.StudentDto;
+import com.naresh.examresult.exceptions.PasswordNotMatchingException;
+import com.naresh.examresult.exceptions.ResourceNotFoundException;
 import com.naresh.examresult.repository.StudentRepository;
 import com.naresh.examresult.service.StudentService;
 
@@ -23,9 +25,16 @@ public class StudentServiceImpln implements StudentService {
     public StudentDto loginStudent(Integer rollNo, String password) {
         Optional<Student> student = studentRepository.findById(rollNo);
 
-        if (student.isPresent() && student.get().getPassword().equals(password))
-            return modelMapper.map(student, StudentDto.class);
-        else return new StudentDto();
+        if (student.isPresent()) {
+            if(student.get().getPassword().equals(password)) {
+                return modelMapper.map(student, StudentDto.class);
+            }else {
+                throw new PasswordNotMatchingException("Password Not matching");
+            }
+        }else {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+
     }
 
     @Override
@@ -42,7 +51,7 @@ public class StudentServiceImpln implements StudentService {
         if (student.isPresent()) {
             return modelMapper.map(student, StudentDto.class);
         } else {
-            return new StudentDto();
+         throw new ResourceNotFoundException("Resource not found");
         }
     }
 
@@ -52,8 +61,14 @@ public class StudentServiceImpln implements StudentService {
 
         if (student.isPresent() && student.get().getPassword().equals(password)) {
             return modelMapper.map(student, StudentDto.class);
+        } else if (student.isPresent() && !student.get().getPassword().equals(password)) {
+
+
+            throw new PasswordNotMatchingException("Password not matching");
+        }else{
+            throw new ResourceNotFoundException("Resource not found");
         }
-        return new StudentDto();
+
     }
 
     @Override

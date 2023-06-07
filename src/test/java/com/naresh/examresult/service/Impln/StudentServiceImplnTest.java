@@ -6,9 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.naresh.examresult.entity.Student;
 import com.naresh.examresult.entity.StudentDto;
 
+import com.naresh.examresult.exceptions.PasswordNotMatchingException;
+import com.naresh.examresult.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,12 +24,16 @@ import java.util.List;
 class StudentServiceImplnTest {
 
     @Autowired StudentServiceImpln studentServiceImpln;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
     @BeforeEach
     void clearDataBase(){
-        jdbcTemplate.execute("delete from student_table");
+        String query= "delete from student_table";
+        System.out.println(query);
+        jdbcTemplate.execute(query);
         //before each testcase this method will run
         //we're going to clear database before running each testcase
     }
@@ -35,30 +42,53 @@ class StudentServiceImplnTest {
 
         System.out.println("-----------------------------------------");
 
-        Student student = new Student();
-        student.setName("Bommi");
-        student.setPassword("pwd1");
-        student.setMath(45);
-        student.setScience(55);
-        student.setEnglish(65);
+        Student student = new Student(5,"Nimmi",20,25,30,"pwd1");
+
         StudentDto savedStudentDto = studentServiceImpln.createStudent(student);
-        StudentDto loggedInStudent = studentServiceImpln.loginStudent(savedStudentDto.getRollNo(), "pwd1");
+        StudentDto loggedInStudent = studentServiceImpln.loginStudent(savedStudentDto.getRollNo(),
+                student.getPassword());
 
         System.out.println(loggedInStudent.toString());
-        Assertions.assertEquals(savedStudentDto.getRollNo(),loggedInStudent.getRollNo());
+        Assertions.assertEquals(savedStudentDto,loggedInStudent);
 
 
         System.out.println("-----------------------------------------");
     }
 
     @Test
-    void loginStudentWithAnInvalidEntry() {
+    void loginStudentWithAnInvalidRollNo() {
 
         System.out.println("-----------------------------------------");
 
-        var loggedInStudent = studentServiceImpln.loginStudent(5, "pwd1");
+        assertThrows(ResourceNotFoundException.class, () -> {
+            // Code that should throw MyException
+            Student student = new Student(5,"Nimmi",20,25,30,"pwd1");
 
-        System.out.println(loggedInStudent.toString());
+            StudentDto savedStudentDto = studentServiceImpln.createStudent(student);
+            StudentDto loggedInStudent = studentServiceImpln.loginStudent(savedStudentDto.getRollNo()+10,
+                    student.getPassword());
+
+            System.out.println(loggedInStudent.toString());
+        });
+
+        System.out.println("-----------------------------------------");
+    }
+
+    @Test
+    void loginStudentWithAnInvalidPassword() {
+
+        System.out.println("-----------------------------------------");
+
+        assertThrows(PasswordNotMatchingException.class, () -> {
+            Student student= new Student(5,"Nimmi",20,25,30,"pwd1");
+            StudentDto createdStudent = studentServiceImpln.createStudent(student);
+            StudentDto loggedInStudent = studentServiceImpln.loginStudent(createdStudent.getRollNo(), (student.getPassword()+"haga"));
+            System.out.println(loggedInStudent.toString());
+        });
+
+
+
+
 
         System.out.println("-----------------------------------------");
     }
@@ -73,28 +103,41 @@ class StudentServiceImplnTest {
         student.setScience(55);
         student.setEnglish(65);
         StudentDto savedStudentDto = studentServiceImpln.createStudent(student);
-        System.out.println(savedStudentDto.toString());
+        Assertions.assertEquals(modelMapper.map(student,StudentDto.class),savedStudentDto);
+
         System.out.println("-----------------------------------------");
     }
 
     @Test
-    void getStudentByIdWithAValidEntry() {
+    void getStudentByIdIsSuccessForAValidEntry() {
         System.out.println("-----------------------------------------");
-        Integer rollNo = 1;
-        System.out.println(studentServiceImpln.getStudentById(rollNo).toString());
+        Student createStudent = new Student();
+        createStudent.setName("Name");
+        createStudent.setScience(20);
+        createStudent.setMath(30);
+        createStudent.setEnglish(40);
+        StudentDto createdStudentDto = studentServiceImpln.createStudent(createStudent);
+        Integer rollNo = createdStudentDto.getRollNo();
+        StudentDto studentDto= studentServiceImpln.getStudentById(rollNo);
+        Assertions.assertEquals(createdStudentDto,studentDto);
         System.out.println("-----------------------------------------");
     }
 
     @Test
-    void getStudentByIdWithAnInvalidEntry() {
-        System.out.println("-----------------------------------------");
-        Integer rollNo = 7;
-        System.out.println(studentServiceImpln.getStudentById(rollNo).toString());
-        System.out.println("-----------------------------------------");
+     void getStudentByIdThrowsCustomMadeExceptionWForAnInvalidEntry() {
+
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            Integer rollNo = 7;
+            studentServiceImpln.getStudentById(rollNo);
+
+        });
+
     }
 
+
     @Test
-    void getResultOfAValidInput() {
+    void getResultIsSuccessForAValidInput() {
         System.out.println("-----------------------------------------");
         Integer rollNo = 1;
         String password = "pwd";
@@ -104,7 +147,7 @@ class StudentServiceImplnTest {
     }
 
     @Test
-    void getResultOfAnInvalidInput() {
+    void getResultThrowsExceptionWhenGivenWrongPassword() {
         System.out.println("-----------------------------------------");
         System.out.println("Wrong password");
         Integer rollNo = 1;
