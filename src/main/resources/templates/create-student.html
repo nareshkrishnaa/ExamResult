@@ -12,61 +12,52 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Student Results</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <!--        <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>-->
-        <a class="nav-link active" aria-current="page" th:href="@{view/new}">New student</a>
-      </li>
-    </ul>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Student Management System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/students/new}" >New Student</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/students}" >Students</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
+<br /><br />
 
-<br/><br/><br/>
-
-<div class="container">
+<div class="container row col-md-8 offset-md-2">
   <div class="card">
     <div class="card-header">
-      <h1>Create student</h1>
+      <h2 class="text-center"> Create Student</h2>
     </div>
     <div class="card-body">
       <form
-      method="post"
-      role="form"
-      th:action="@{/view/new}"
-      th:object="${student}"
+              method="post"
+              role="form"
+              th:action="@{/students}"
+              th:object="${student}"
       >
         <div class="form-group mb-3">
-          <label class="form-label">Name</label>
-          <input type="text"
-          th:field="*{name}"
-          >
-          <br/>
-          <label class="form-label">Password</label>
-          <input type="text"
-                 th:field="*{password}"/>
-          <br>
-          <label class="form-label">Math</label>
-          <input type="text"
-                 th:field="*{math}"/>
-          <br/>
-          <label class="form-label">Subject 1</label>
-          <input type="text"
-                 th:field="*{subject1}"/>
-          <br/>
-          <label class="form-label">Subject 2</label>
-          <input type="text"
-                 th:field="*{subject2}"/>
-          <br/>
-          <input type="submit" value="Submit">
-
+          <label class="form-label">Student Name</label>
+          <input
+                  class="form-control"
+                  id="Name"
+                  name="Name"
+                  placeholder="Enter name"
+                  type="text"
+                  th:field="*{Name}"
+          />
+          <p th:if="${#fields.hasErrors('Name')}" class="text-danger"
+             th:errors="*{Name}"></p>
         </div>
 
+        <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
   </div>
