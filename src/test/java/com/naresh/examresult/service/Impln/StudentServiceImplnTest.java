@@ -140,31 +140,32 @@ class StudentServiceImplnTest {
     }
 
 
-    //@Test
+    @Test
     void getResultIsSuccessForAValidInput() {
-        System.out.println("-----------------------------------------");
-        Integer rollNo = 1;
-        String password = "pwd";
-
-        System.out.println(studentServiceImpln.getResult(rollNo, password));
-        System.out.println("-----------------------------------------");
+        Student student = new Student(10,"Reshma",34,34,36,"pwd");
+        StudentDto createdStudentDto = studentServiceImpln.createStudent(student);
+        StudentDto result = studentServiceImpln.getResult(createdStudentDto.getRollNo(),student.getPassword());
+        Assertions.assertEquals(createdStudentDto,result);
     }
 
-   // @Test
+   @Test
     void getResultThrowsExceptionWhenGivenWrongPassword() {
-        System.out.println("-----------------------------------------");
-        System.out.println("Wrong password");
-        Integer rollNo = 1;
-        String password = "#pwd";
+       Student student = new Student(10,"Karishma",34,34,36,"pwd");
+       StudentDto createdStudentDto = studentServiceImpln.createStudent(student);
 
-        System.out.println(studentServiceImpln.getResult(rollNo, password));
+       assertThrows(PasswordNotMatchingException.class, () -> {
+           StudentDto result = studentServiceImpln.getResult(createdStudentDto.getRollNo(),student.getPassword()+"fgvdrv");
+       });
+   }
 
-        rollNo = 100;
-        password = "pwd";
-        System.out.println("-----------------------------------------");
-        System.out.println("Wrong roll No");
-        System.out.println(studentServiceImpln.getResult(rollNo, password));
-        System.out.println("-----------------------------------------");
+    @Test
+    void getResultThrowsExceptionWhenInvalidRollNumberIsGiven() {
+        Student student = new Student(10,"Karishma",34,34,36,"pwd");
+        StudentDto createdStudentDto = studentServiceImpln.createStudent(student);
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            StudentDto result = studentServiceImpln.getResult((100+createdStudentDto.getRollNo()),student.getPassword());
+        });
     }
 
     @Test

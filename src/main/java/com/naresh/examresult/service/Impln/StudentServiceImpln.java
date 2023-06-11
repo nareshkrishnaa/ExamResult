@@ -63,13 +63,14 @@ public class StudentServiceImpln implements StudentService {
             return modelMapper.map(student, StudentDto.class);
         } else if (student.isPresent() && !student.get().getPassword().equals(password)) {
 
-
             throw new PasswordNotMatchingException("Password not matching");
         }else{
             throw new ResourceNotFoundException("Resource not found");
         }
 
     }
+
+    //------------------------------------------------------------------------------------//
 
     @Override
     public List<StudentDto> getAllStudents() {
