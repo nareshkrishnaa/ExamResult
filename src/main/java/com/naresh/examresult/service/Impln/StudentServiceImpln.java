@@ -26,15 +26,14 @@ public class StudentServiceImpln implements StudentService {
         Optional<Student> student = studentRepository.findById(rollNo);
 
         if (student.isPresent()) {
-            if(student.get().getPassword().equals(password)) {
+            if (student.get().getPassword().equals(password)) {
                 return modelMapper.map(student, StudentDto.class);
-            }else {
+            } else {
                 throw new PasswordNotMatchingException("Password Not matching");
             }
-        }else {
+        } else {
             throw new ResourceNotFoundException("Resource not found");
         }
-
     }
 
     @Override
@@ -51,7 +50,7 @@ public class StudentServiceImpln implements StudentService {
         if (student.isPresent()) {
             return modelMapper.map(student, StudentDto.class);
         } else {
-         throw new ResourceNotFoundException("Resource not found");
+            throw new ResourceNotFoundException("Resource not found");
         }
     }
 
@@ -64,13 +63,12 @@ public class StudentServiceImpln implements StudentService {
         } else if (student.isPresent() && !student.get().getPassword().equals(password)) {
 
             throw new PasswordNotMatchingException("Password not matching");
-        }else{
+        } else {
             throw new ResourceNotFoundException("Resource not found");
         }
-
     }
 
-    //------------------------------------------------------------------------------------//
+    // ------------------------------------------------------------------------------------//
 
     @Override
     public List<StudentDto> getAllStudents() {
@@ -102,6 +100,20 @@ public class StudentServiceImpln implements StudentService {
 
         return new StudentDto();
     }
+
+    @Override
+    public StudentDto updateStudent(StudentDto studentDto) {
+        Optional<Student> student1 = studentRepository.findById(studentDto.getRollNo());
+        if (student1.isPresent()) {
+            Student updatedStudent = student1.get();
+            modelMapper.map(studentDto,updatedStudent);
+            studentRepository.save(updatedStudent);
+            return modelMapper.map(updatedStudent, StudentDto.class);
+        }
+
+        return new StudentDto();
+    }
+
 
     @Override
     public void deleteStudent(Integer rollNo) {

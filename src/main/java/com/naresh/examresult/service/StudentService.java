@@ -20,5 +20,7 @@ public interface StudentService {
 
     StudentDto updateStudent(Student student);
 
+    StudentDto updateStudent(StudentDto studentDto);
+
     void deleteStudent(Integer rollNo);
 }

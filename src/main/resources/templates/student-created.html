@@ -7,9 +7,10 @@
     <title>Student created</title>
 </head>
 <body>
-<h2> Student created</h2>
+<h2> Student created - Success!</h2>
 <div th:object="${student}">
-  <p>Name:<strong th:text="*{name}"></strong></p>
+  <p>Name:<strong th:text="*{name}"></strong> </p>
+    <p>Roll Number:<strong th:text="${rollNo}"></strong> </p>
 </div>
 </body>
 </html>

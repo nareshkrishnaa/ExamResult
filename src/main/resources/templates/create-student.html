@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css"/>
   <title>Create student page</title>
+  <link th:href="@{resources/static/assets/css/demo.css}" rel="stylesheet" />
+
 </head>
 <body>
-<h1 class="centre">Student login page</h1>
-<form>
+<h1 >Student login page</h1>
+<form
+        method="post"
+        th:action="@{/student/created}"
+        th:object="${student}">
   <div>
     <label>Name</label>
-    <input>
+    <input
+            id="name"
+            name="name"
+            type="text"
+            th:value="*{name}">
   </div>
   <br>
   <button>Submit</button>

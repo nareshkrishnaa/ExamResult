@@ -26,7 +26,10 @@ public class StudentDto {
             return false;
         }
         StudentDto student = (StudentDto) o;
-        return rollNo == student.rollNo && math == student.math && science == student.science &&
-                english == student.english && Objects.equals(name, student.name);
+        return rollNo == student.rollNo
+                && math == student.math
+                && science == student.science
+                && english == student.english
+                && Objects.equals(name, student.name);
     }
 }
