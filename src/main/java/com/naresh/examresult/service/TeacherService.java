@@ -7,6 +7,6 @@ public interface TeacherService {
     String teacherLogin(Integer id, String password);
 
     Teacher createTeacher(Teacher teacher);
-    // String assignTeacher(String id,String );
+
 
 }

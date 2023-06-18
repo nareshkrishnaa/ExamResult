@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://thymeleaf.org">
+      xmlns:th="http://thymeleaf.org"
+>
 <head>
   <meta charset="UTF-8">
   <title>Create student page</title>
   <link th:href="@{resources/static/assets/css/demo.css}" rel="stylesheet" />
 
+  <script>
+    function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirm_password = document.getElementById("confirm_password").value;
+
+      if (password !== confirm_password) {
+        document.getElementById("error_message").innerText = "Password and confirm password do not match.";
+        return false;
+      }
+
+      // If the passwords match, the form can be submitted
+      return true;
+    }
+  </script>
 </head>
 <body>
-<h1 >Student login page</h1>
+<h1 >Student creation Page</h1>
 <form
+
         method="post"
+        th:object="${student}"
         th:action="@{/student/created}"
-        th:object="${student}">
+        onsubmit="return validateForm()"
+>
+
+
   <div>
     <label>Name</label>
     <input
-            id="name"
-            name="name"
+
             type="text"
-            th:value="*{name}">
+            th:field="*{name}">
   </div>
   <br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required
+
+         th:field="*{password}">
+<br><br>
+  <label for="confirm_password">Confirm Password:</label>
+  <input type="password" id="confirm_password" name="confirm_password" required
+         >
+
+  <br><br>
+  <div id="error_message" style="color: red;"></div>
+  <br><br>
   <button>Submit</button>
 
 </form>

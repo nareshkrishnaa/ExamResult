@@ -45,6 +45,7 @@ public class StudentViewController {
         return "student-created";
     }
 
+    //http://localhost:8080/get-result
     @GetMapping("/get-result")
     public String getResultPage(Model model) {
         PasswordChecker passwordChecker = new PasswordChecker();
@@ -70,6 +71,7 @@ public class StudentViewController {
         model.addAttribute("studentDto",studentDto);
         return "result-updation";
     }
+
 
     @PostMapping("/post-updation")
     public String postUpdation(Model model, @ModelAttribute("studentDto") StudentDto studentDto){
