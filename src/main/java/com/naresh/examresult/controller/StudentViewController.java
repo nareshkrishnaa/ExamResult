@@ -74,7 +74,9 @@ public class StudentViewController {
     //http://localhost:8080/update-student
     @GetMapping("/update-student")
     public String updateStudent(Model model,@ModelAttribute("student") StudentDto studentDto){
-
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(studentDto.toString());
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         model.addAttribute("studentDto",studentDto);
         return "result-updation";
     }
