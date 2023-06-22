@@ -27,8 +27,16 @@ public class StudentViewController {
         model.addAttribute("students", studentDtos);
         return "student-list";
     }
+    //http://localhost:8080/dummy2
+    @GetMapping("/dummy2")
+    public String getStudentListdummy2(Model model) {
+        System.out.println("redirected to this method");
+        List<StudentDto> studentDtos = studentService.getAllStudents();
+        model.addAttribute("students", studentDtos);
+        return "dummy2";
+    }
 
-    // http://localhost:8080/new-student
+        // http://localhost:8080/new-student
     @GetMapping("new-student")
     public String newStudent(Model model) {
         // student model object to store student form data
@@ -64,10 +72,9 @@ public class StudentViewController {
     }
 
     //http://localhost:8080/update-student
-    @GetMapping("update-student")
-    public String updateStudent(Model model){
+    @GetMapping("/update-student")
+    public String updateStudent(Model model,@ModelAttribute("student") StudentDto studentDto){
 
-        StudentDto studentDto= new StudentDto();
         model.addAttribute("studentDto",studentDto);
         return "result-updation";
     }
@@ -89,26 +96,11 @@ public class StudentViewController {
              updatedStudentDto=studentService.updateStudent(studentDto);
             model.addAttribute("updatedDto",updatedStudentDto);
         }
-
-
         return "post-updation";
 
     }
-    //    @PostMapping("/list")
-    //    public String saveStudent(@Valid @ModelAttribute("student") Student student,
-    //                              Model model){
-    //        System.out.println("create method called");
-    //        studentService.createStudent(student);
-    //        return "redirect:/list";
-    //
-    //    }
 
-//    @GetMapping("/{id}/{password}")
-//    public String displayResult(
-//            Model model, @PathVariable Integer id, @PathVariable String password) {
-//        StudentDto studentDto = studentService.getResult(id, password);
-//
-//        model.addAttribute("student", studentDto);
-//        return "result-page";
-//    }
-}
+
+    }
+
+
