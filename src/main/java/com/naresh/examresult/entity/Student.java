@@ -1,6 +1,7 @@
 /* (C)2023 */
 package com.naresh.examresult.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -22,8 +23,11 @@ public class Student {
     private Integer rollNo;
 
     private String name;
-    private int math;
-    private int english;
-    private int science;
+    @Column(nullable = true)
+    private Integer math;
+    @Column(nullable = true)
+    private Integer english;
+    @Column(nullable = true)
+    private Integer science;
     private String password;
 }

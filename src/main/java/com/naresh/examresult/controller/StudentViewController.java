@@ -19,24 +19,7 @@ public class StudentViewController {
 
     @Autowired private StudentService studentService;
 
-    // http://localhost:8080/list
-    @GetMapping("/list")
-    public String getStudentList(Model model) {
-        System.out.println("redirected to this method");
-        List<StudentDto> studentDtos = studentService.getAllStudents();
-        model.addAttribute("students", studentDtos);
-        return "student-list";
-    }
-    //http://localhost:8080/dummy2
-    @GetMapping("/dummy2")
-    public String getStudentListdummy2(Model model) {
-        System.out.println("redirected to this method");
-        List<StudentDto> studentDtos = studentService.getAllStudents();
-        model.addAttribute("students", studentDtos);
-        return "dummy2";
-    }
-
-        // http://localhost:8080/new-student
+    // http://localhost:8080/new-student
     @GetMapping("new-student")
     public String newStudent(Model model) {
         // student model object to store student form data
@@ -52,35 +35,36 @@ public class StudentViewController {
         model.addAttribute("rollNo", rollNo);
         return "student-created";
     }
-
-    //http://localhost:8080/get-result
-    @GetMapping("/get-result")
-    public String getResultPage(Model model) {
-        PasswordChecker passwordChecker = new PasswordChecker();
-        model.addAttribute("passwordChecker", passwordChecker);
-        return "get-result-page";
+    //http://localhost:8080/welcome-page
+    @GetMapping("/welcome-page")
+    public String welcomePage(){
+        return "welcome-page";
     }
 
-    @PostMapping("display-result")
-    public String displayResult(Model model,
-                                @ModelAttribute("passwordChecker") PasswordChecker passwordChecker){
-        System.out.println("rollNo : "+passwordChecker.getRollNo());
-        System.out.println("password : "+passwordChecker.getPassword());
-        StudentDto studentDto=studentService.getResult(passwordChecker.getRollNo(), passwordChecker.getPassword());
-        model.addAttribute("studentDto",studentDto);
-        return "display-result-page";
+    @GetMapping("/teacher-portal")
+    public String teacherPortal(){
+        return "teacher-portal";
+    }
+
+    //http://localhost:8080/student-list
+    @GetMapping("/student-list")
+    public String getStudentList(Model model) {
+        System.out.println("redirected to this method");
+        List<StudentDto> studentDtos = studentService.getAllStudents();
+        model.addAttribute("students", studentDtos);
+        return "student-list";
     }
 
     //http://localhost:8080/update-student
-    @GetMapping("/update-student")
-    public String updateStudent(Model model,@ModelAttribute("student") StudentDto studentDto){
+    @GetMapping("/update-student/{id}")
+    public String updateStudent(@PathVariable("id") Integer id,Model model){
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        StudentDto studentDto = studentService.getStudentById(id);
         System.out.println(studentDto.toString());
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         model.addAttribute("studentDto",studentDto);
         return "result-updation";
     }
-
 
     @PostMapping("/post-updation")
     public String postUpdation(Model model, @ModelAttribute("studentDto") StudentDto studentDto){
@@ -95,13 +79,33 @@ public class StudentViewController {
             existingStudentDto.get().setMath(studentDto.getMath());
             existingStudentDto.get().setEnglish(studentDto.getEnglish());
             existingStudentDto.get().setScience(studentDto.getScience());
-             updatedStudentDto=studentService.updateStudent(studentDto);
+            updatedStudentDto=studentService.updateStudent(studentDto);
             model.addAttribute("updatedDto",updatedStudentDto);
+            return "post-updation";
         }
         return "post-updation";
 
     }
 
+
+    //http://localhost:8080/get-result
+    @GetMapping("/get-result")
+    public String getResultPage(Model model) {
+        PasswordChecker passwordChecker = new PasswordChecker();
+        model.addAttribute("passwordChecker", passwordChecker);
+        return "get-result-page";
+    }
+
+
+    @PostMapping("display-result")
+    public String displayResult(Model model,
+                                @ModelAttribute("passwordChecker") PasswordChecker passwordChecker){
+        System.out.println("rollNo : "+passwordChecker.getRollNo());
+        System.out.println("password : "+passwordChecker.getPassword());
+        StudentDto studentDto=studentService.getResult(passwordChecker.getRollNo(), passwordChecker.getPassword());
+        model.addAttribute("studentDto",studentDto);
+        return "display-result-page";
+    }
 
     }
 
