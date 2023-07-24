@@ -3,8 +3,6 @@ package com.naresh.examresult.service.Impln;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.naresh.examresult.entity.Student;
-import com.naresh.examresult.entity.StudentDto;
 import com.naresh.examresult.exceptions.PasswordNotMatchingException;
 import com.naresh.examresult.exceptions.ResourceNotFoundException;
 
