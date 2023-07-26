@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+
+    <title>Dynamic Form</title>
+    <style>
+    .item{
+        border: solid 1px;
+        padding: 20px;
+        font-size: 20px;
+
+    }
+    .ctr{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+
+        padding: 5px;
+    }
+    .subject-field {
+      display: flex;
+      margin-bottom: 10px;
+
+    }
+
+    .subject-field input[type="text"],
+    .subject-field input[type="number"] {
+      margin-right: 10px;
+    }
+
+    #subjects-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="ctr">
+    <div class="item">
+
+        <form id="dynamic-form"
+              th:action="@{/studentMarkSout}" method="post"
+        >
+            <label>Name : </label><label th:text="${name}"> </label>
+            <br>
+            <label>Roll No :</label><label th:text="${rollNo}"> </label>
+            <div>
+                <label for="exam-name">Name of the examination:</label>
+                <input type="text" id="exam-name" required>
+            </div>
+
+            <div id="subjects-container" >
+                <div class="subject-field" th:object="${SubjectMark}">
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject}" required>
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark}" required>
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+            </div>
+
+            <button type="button" id="add-subject-btn">Add Subject</button>
+            <button type="button" id="delete-subject-btn">Delete Selected Subjects</button>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <button th:onclick="'alert(\'static variable used here.\');'">using static variable</button>
+
+
+
+
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const addSubjectBtn = document.getElementById('add-subject-btn');
+      const deleteSubjectBtn = document.getElementById('delete-subject-btn');
+      const subjectsContainer = document.getElementById('subjects-container');
+
+      addSubjectBtn.addEventListener('click', function () {
+        const subjectField = document.createElement('div');
+        subjectField.classList.add('subject-field');
+
+        const subjectInput = document.createElement('input');
+        subjectInput.type = 'text';
+        subjectInput.classList.add('subject');
+        subjectInput.placeholder = 'Name of the subject';
+        subjectInput.required = true;
+
+        const marksInput = document.createElement('input');
+        marksInput.type = 'number';
+        marksInput.classList.add('marks');
+        marksInput.placeholder = 'Marks';
+        marksInput.required = true;
+
+        const checkboxInput = document.createElement('input');
+        checkboxInput.type = 'checkbox';
+        checkboxInput.classList.add('subject-checkbox');
+
+        subjectField.appendChild(subjectInput);
+        subjectField.appendChild(marksInput);
+        subjectField.appendChild(checkboxInput);
+        subjectsContainer.appendChild(subjectField);
+      });
+
+      deleteSubjectBtn.addEventListener('click', function () {
+        const selectedSubjects = document.querySelectorAll('.subject-checkbox:checked');
+
+        selectedSubjects.forEach(function (subject) {
+          subject.parentElement.remove();
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

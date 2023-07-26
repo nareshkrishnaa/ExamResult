@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:pth="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student details updation page</title>
+</head>
+<body>
+<h1>Result updation page </h1>
+<form method="post"
+        th:action="@{/post-updation}" th:object="${studentDto}">
+
+  <label>Roll Number:</label>
+  <input type="text" th:field="*{rollNo}" th:value="${studentDto.rollNo}" readonly />
+
+  <label>Name:</label>
+  <input type="text" th:field="*{name}" th:value="${studentDto.name}" />
+
+  <br><br>
+  <label>Math:</label>
+  <input type="text" th:field="*{math}" th:value="${studentDto.math}" />
+
+  <br><br>
+  <label>Science:</label>
+  <input type="text" th:field="*{science}" th:value="${studentDto.science}" />
+
+  <br><br>
+  <label>English:</label>
+  <input type="text" th:field="*{english}" th:value="${studentDto.english}" />
+
+  <br><br>
+  <button>Submit</button>
+</form>
+
+</body>
+</html>

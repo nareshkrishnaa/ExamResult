@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Get result page</title>
+</head>
+<body>
+<h1> Student Login page</h1>
+<br><br>
+<div style="border-style:solid; width:500px">
+    <br><br>
+    <form
+            role="form"
+            method="post"
+    th:object="${passwordChecker}"
+    th:action="@{/display-result}"
+    >
+        <label>RollNo :</label>
+        <input type="number"
+               th:field="*{rollNo}">
+<br><br>
+        <label>Password :</label>
+        <input type="text"
+               th:field="*{password}">
+
+        <br>
+        <br>
+        <button type="submit">Get result</button>
+
+    </form>
+    <br><br>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Updated Student Details</title>
+</head>
+<body>
+<h1>Student Result</h1>
+<br><br>
+<div
+        style="border-style:solid; width:500px"
+        th:object="${updatedDto}"
+        align="centre"
+>
+  <p>Roll Number : <strong th:text="*{rollNo}"></strong></p>
+  <p>Name : <strong th:text="*{name}"></strong></p>
+  <p>Science : <strong th:text="*{science}"></strong></p>
+  <p>Math : <strong th:text="*{math}"></strong></p>
+  <p>English : <strong th:text="*{english}"></strong></p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student List</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<h1 class="centre">Student List</h1>
+<hr/>
+<br>
+<input type="text" id="search-input" placeholder="Search">
+<table id="student-table" border="1">
+  <thead>
+  <tr>
+    <th>S No</th>
+    <th>Roll No</th>
+    <th>Name</th>
+    <th>Math</th>
+    <th>English</th>
+    <th>Science</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="student, stat: ${students}">
+    <td th:text="${stat.count}">1</td>
+    <td th:text="${student.rollNo}"></td>
+    <td th:text="${student.Name}"></td>
+    <td th:text="${student.math}"></td>
+    <td th:text="${student.english}"></td>
+    <td th:text="${student.science}"></td>
+    <td>
+      <a th:href="@{/update-student/{id}(id=${student.rollNo})}">Edit</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+    const searchInput = document.getElementById('search-input');
+    const studentTable = document.getElementById('student-table');
+    const rows = studentTable.getElementsByTagName('tr');
+
+    searchInput.addEventListener('keyup', function () {
+        const filter = searchInput.value.toLowerCase();
+
+        for (let i = 1; i < rows.length; i++) {
+            const nameColumn = rows[i].getElementsByTagName('td')[2];
+            const rollNoColumn = rows[i].getElementsByTagName('td')[1];
+
+            if (nameColumn.innerHTML.toLowerCase().indexOf(filter) > -1 ||
+                rollNoColumn.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome page</title>
+</head>
+<body>
+<h1>Welcome to Exam result portal</h1>
+<form  th:action="@{/teacher-login}">
+    <button type="submit">Teacher login</button>
+</form>
+
+<br><br>
+
+<form th:action="@{/get-result}">
+    <button type="submit" >Student login</button>
+</form>
+
+</body>
+</html>

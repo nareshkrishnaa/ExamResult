@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher login portal</title>
+</head>
+<body>
+<h1>Teacher login portal</h1>
+<form  th:action="@{/new-student}">
+  <button type="submit">Create Student</button>
+</form>
+
+<br><br>
+
+<form th:action="@{/student-list}">
+  <button type="submit" >Get student List</button>
+</form>
+</body>
+</html>

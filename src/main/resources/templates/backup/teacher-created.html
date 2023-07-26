@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher created</title>
+</head>
+<body>
+<h2> Teacher created - Success!</h2>
+<div th:object="${createdTeacher}">
+  <p>Name:<strong th:text="*{name}"></strong> </p>
+  <p>staff Id:<strong th:text="*{staffId}"></strong> </p>
+</div>
+</body>
+</html>
