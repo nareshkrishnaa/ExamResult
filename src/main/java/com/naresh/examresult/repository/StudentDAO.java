@@ -1,5 +1,7 @@
 package com.naresh.examresult.repository;
 
+import com.google.gson.Gson;
+import com.naresh.examresult.model.ResultUpdationPageObject;
 import com.naresh.examresult.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -40,5 +42,15 @@ public class StudentDAO {
                 new Object[]{rollNumber},
                 new BeanPropertyRowMapper(Student.class));
 
+    }
+
+    public String rupoToJson(ResultUpdationPageObject rupo){
+        return new Gson().toJson(rupo);
+    }
+
+    public ResultUpdationPageObject jsonToRupo(String jsonString){
+        Gson gson=new Gson();
+        ResultUpdationPageObject result = gson.fromJson(jsonString, ResultUpdationPageObject.class);
+        return result;
     }
 }
