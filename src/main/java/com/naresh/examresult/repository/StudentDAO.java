@@ -53,4 +53,20 @@ public class StudentDAO {
         ResultUpdationPageObject result = gson.fromJson(jsonString, ResultUpdationPageObject.class);
         return result;
     }
+
+//Insert into table
+    public void rupoToDB(ResultUpdationPageObject rupo){
+        String sql = "INSERT INTO examresult2 (roll_number, exam_name, result_json) VALUES (?, ?, ?)";
+        try {
+            // Use JdbcTemplate to execute the SQL query with placeholders
+            String rupoString = "'"+this.rupoToJson(rupo)+"'";
+            System.out.println(rupoString);
+            jdbcTemplate.update(sql, rupo.getRollNo(), rupo.getNameOftheExamination(), rupoString);
+            System.out.println("Data inserted successfully!");
+        } catch (Exception e) {
+            // Handle any exceptions
+            System.err.println("Error inserting data: " + e.getMessage());
+        }
+
+    }
 }
