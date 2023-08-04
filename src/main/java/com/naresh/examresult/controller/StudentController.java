@@ -20,7 +20,7 @@ public class StudentController {
 
 //this url brings the page where the teacher enters the roll No of the student
 
-    //http://localhost:8080/result-portal
+//http://localhost:8080/result-portal
     @GetMapping("result-portal")
     public String resultPortal(){
 
@@ -30,12 +30,12 @@ public class StudentController {
     @PostMapping("/result-updation") // Handles POST requests to "/submit" endpoint
     public String checkRollNo(@RequestParam("rollNumber") int rollNumber,Model model) {
 
-        Student student = studentDAO.getStudentByRollNumber(rollNumber);
-        System.out.println(student.toString());
-        model.addAttribute("rollNo",rollNumber);
-        model.addAttribute("name",student.getName());
-        model.addAttribute("SubjectMark",new SubjectMark());
-        System.out.println("Received Roll Number: " + rollNumber);
+        SubjectMark subjectMark = new SubjectMark();
+        subjectMark.setRollNo(rollNumber);
+        subjectMark.setName(studentDAO.getStudentByRollNumber(rollNumber).getName());
+        //        System.out.println(student.toString());
+        model.addAttribute("subjectMark",subjectMark);
+//        System.out.println("Received Roll Number: " + rollNumber);
 
         return "result-updation2"; // Redirect to a result page after form submission
     }
@@ -45,6 +45,7 @@ public class StudentController {
 
 @PostMapping("/studentMarkSout")
 public void test1(@ModelAttribute("studentMark") SubjectMark subjectMark){
+
     System.out.println(subjectMark.toString());
 }
     //http://localhost:8080/add
@@ -52,6 +53,11 @@ public void test1(@ModelAttribute("studentMark") SubjectMark subjectMark){
     public String addStudent() {
         studentDAO.insertStudent("narech","1999-05-02");
         return "Student added successfully!";
+    }
+
+    @PostMapping("/studentMarkToDb")
+    public void studentMarktToDb(@ModelAttribute("studentMark") SubjectMark subjectMark,@RequestParam("rollNumber") int rollNumber){
+
     }
 
 

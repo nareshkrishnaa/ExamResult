@@ -56,7 +56,7 @@ public class StudentDAO {
 
 //Insert into table
     public void rupoToDB(ResultUpdationPageObject rupo){
-        String sql = "INSERT INTO examresult2 (roll_number, exam_name, result_json) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO result (roll_number, exam_name, result_json) VALUES (?, ?, ?)";
         try {
             // Use JdbcTemplate to execute the SQL query with placeholders
             String rupoString = "'"+this.rupoToJson(rupo)+"'";

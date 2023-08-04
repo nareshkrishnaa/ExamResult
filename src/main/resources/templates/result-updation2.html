@@ -44,19 +44,52 @@
 
         <form id="dynamic-form"
               th:action="@{/studentMarkSout}" method="post"
+              th:object="${subjectMark}"
         >
-            <label>Name : </label><label th:text="${name}"> </label>
+            <label>Name : </label><label th:text="${subjectMark.name}"> </label>
+
             <br>
-            <label>Roll No :</label><label th:text="${rollNo}"> </label>
+            <label>Roll No :</label><label th:text="${subjectMark.rollNo}"> </label>
             <div>
                 <label for="exam-name">Name of the examination:</label>
-                <input type="text" id="exam-name" required>
+                <input type="text" id="exam-name" th:field="*{nameOfTheExamination}" required>
             </div>
 
             <div id="subjects-container" >
-                <div class="subject-field" th:object="${SubjectMark}">
-                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject}" required>
-                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark}" required>
+
+                <div class="subject-field" >
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject1}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark1}" >
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+                <div class="subject-field">
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject2}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark2}" >
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+                <div class="subject-field" >
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject3}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark3}" >
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+                <div class="subject-field">
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject4}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark4}">
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+                <div class="subject-field" >
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject5}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark5}" >
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+                <div class="subject-field" >
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject6}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark6}" >
+                    <input type="checkbox" class="subject-checkbox">
+                </div>
+                <div class="subject-field">
+                    <input type="text" class="subject" placeholder="Name of the subject" th:field="*{subject7}" >
+                    <input type="number" class="marks" placeholder="Marks" th:field="*{mark7}" >
                     <input type="checkbox" class="subject-checkbox">
                 </div>
             </div>
@@ -67,12 +100,6 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-
-
-
-
-
-
 </div>
 
 
@@ -90,13 +117,13 @@
         subjectInput.type = 'text';
         subjectInput.classList.add('subject');
         subjectInput.placeholder = 'Name of the subject';
-        subjectInput.required = true;
+        subjectInput.required = false;
 
         const marksInput = document.createElement('input');
         marksInput.type = 'number';
         marksInput.classList.add('marks');
         marksInput.placeholder = 'Marks';
-        marksInput.required = true;
+        marksInput.required = false;
 
         const checkboxInput = document.createElement('input');
         checkboxInput.type = 'checkbox';
