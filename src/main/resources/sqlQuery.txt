@@ -1,0 +1,15 @@
+CREATE SCHEMA examresult2;
+CREATE TABLE students (
+    roll_number INT PRIMARY KEY,
+    name VARCHAR(50),
+    dob DATE
+);
+
+
+CREATE TABLE result (
+    roll_number INT,
+    exam_name VARCHAR(255),
+    result_json VARCHAR(1000),
+    PRIMARY KEY (roll_number, exam_name),
+    FOREIGN KEY (roll_number) REFERENCES student(roll_number)
+);
